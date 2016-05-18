@@ -40,6 +40,7 @@ body {
 }
 #app {
   color: #2c3e50;
+  width: 100%;
   padding: 2rem;
 }
 
