@@ -41,7 +41,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   input {
-    border-radius: 2px;
+    width: 400px;
+    
   }
 
   .todo {
@@ -49,8 +50,16 @@ export default {
     background-color: rgba(0, 0, 0, 0.6);
     line-height: 2;
     width: 100%;
+    color: #fff;
   }
 
+  .todo span {
+    cursor: pointer;
+  }
+  .addTodo {
+    font-size: 2rem;
+  }
+  
   #modal {
     position: fixed;
     z-index: 9999;
@@ -67,8 +76,9 @@ export default {
   
   #modal-container {
     margin: 0 auto;
-    width: 300px;
-    height: 500px;
+    padding: 10px;
+    width: 500px;
+    height: 300px;
     background-color: #fff;
   }
 </style>
