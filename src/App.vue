@@ -1,7 +1,7 @@
 <template>
   <sidebar :todo-types="todoTypes"></sidebar>
   <div id="app">
-    <todo :todos="todos"></todo>
+    <todo :todos="todos" :todo-types="todoTypes"></todo>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
   },
   data () {
     return {
-      todoTypes: ['All', 'Work', 'Life', 'Study'],
+      todoTypes: ['Work', 'Life', 'Study'],
       todos: []
     }
   }

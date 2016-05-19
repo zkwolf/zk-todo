@@ -1,7 +1,10 @@
 <template>
   <sidebar>
+    <div>
+      All
+    </div>
     <div v-for="todoType in todoTypes">
-        {{ todoType }}
+      {{ todoType }}
     <div>
   </sidebar>
 </template>

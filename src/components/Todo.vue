@@ -1,13 +1,18 @@
 <template>
   <div class="addTodo" @click="addTodoShow = true">+</div>
   <div class="todo" v-for="todo in todos">
-    {{ todo.text }}
-    <span @click="removeTodo($index)">X</span>
+    <div class="todo_item" v-for="value in todo">
+      {{ value }}
+      <span @click="removeTodo($index)">X</span>
+    </div>
   </div>
   <div id="modal" v-show="addTodoShow">
     <div id="modal-container">
-      <span>Add Todo</span>
-      <input type="text" v-model="newTodo" @keyup.enter="addTodo" @keyup.esc="addTodoShow = false">
+      <div v-for="todoType in todoTypes">
+        <input type="radio" v-model="picked" value="{{ todoType }}" id="{{ todoType }}">
+        <label for="{{ todoType }}">{{ todoType }}</label>
+      </div>
+      <input type="text" v-model="newTodo" @keyup.enter="addTodo" @keyup.esc="addTodoShow = false" id="addTodo">
     </div>
   </div>
 </template>
@@ -17,18 +22,25 @@ export default {
   data () {
     return {
       newTodo: '',
-      addTodoShow: false
+      addTodoShow: false,
+      picked: ''
     }
   },
   props: {
-    todos: ''
+    todos: '',
+    todoTypes: '',
   },
   methods: {
     addTodo: function () {
       let text = this.newTodo.trim()
+      let picked = this.picked
       if (text) {
-        this.todos.push({ text: text })
-        this.newTodo = ''
+        if (picked) {
+          let todo_item = {}
+          todo_item[picked] = text
+          this.todos.push(todo_item)
+          this.newTodo = ''
+        }
       }
     },
     removeTodo: function (index) {
@@ -40,7 +52,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  input {
+  #addTodo {
     width: 400px;
     
   }
