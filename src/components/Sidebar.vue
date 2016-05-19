@@ -1,9 +1,9 @@
 <template>
   <sidebar>
-    <div>
+    <div @click="filterTodo">
       All
     </div>
-    <div v-for="todoType in todoTypes">
+    <div v-for="todoType in todoTypes" @click="filterTodo">
       {{ todoType }}
     <div>
   </sidebar>
@@ -12,7 +12,26 @@
 <script>
 export default {
   props: {
-    todoTypes: ''
+    todoTypes: '',
+    filterTodos: '',
+    todos: ''
+  },
+  methods: {
+    filterTodo: function (event) {
+      this.filterTodos = []
+      let todoType = event.target.textContent.replace(/(^\s+)|(\s+$)/g, "")
+      if (todoType === 'All') {
+        this.filterTodos = this.todos
+        return
+      }
+      for (let todo of this.todos) {
+        console.log(todoType)
+        console.log(Object.keys(todo)[0])
+        if (Object.keys(todo)[0] === todoType) {
+          this.filterTodos.push(todo)
+        }
+      }
+    }
   }
 }
 </script>
