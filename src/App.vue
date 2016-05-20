@@ -2,7 +2,7 @@
   <sidebar :todos="todos" :filter-todos.sync="filterTodos" :todo-types="todoTypes"></sidebar>
   <div id="app">
     <div class="addTodo" @click="addTodoShow = true">+</div>
-    <todo :todos="filterTodos" :todo-types="todoTypes"></todo>
+    <todo :todos="todos" :filter-todos="filterTodos" :todo-types="todoTypes"></todo>
     <div id="modal" v-show="addTodoShow">
       <div id="modal-container">
         <div v-for="todoType in todoTypes">

@@ -25,8 +25,6 @@ export default {
         return
       }
       for (let todo of this.todos) {
-        console.log(todoType)
-        console.log(Object.keys(todo)[0])
         if (Object.keys(todo)[0] === todoType) {
           this.filterTodos.push(todo)
         }

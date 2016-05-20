@@ -1,5 +1,5 @@
 <template>  
-  <div class="todo" v-for="todo in todos">
+  <div class="todo" v-for="todo in filterTodos">
     <div class="todo_item" v-for="value in todo">
       {{ value }}
       <span @click="removeTodo($index)">X</span>
@@ -17,11 +17,14 @@ export default {
   },
   props: {
     todos: '',
+    filterTodos: '',
     todoTypes: '',
   },
   methods: {
     removeTodo: function (index) {
-      this.todos.splice(index, 1);
+      this.filterTodos.splice(index, 1)
+      let removeTodoIndex = this.filterTodos[index]
+      this.todos.splice(removeTodoIndex, 1)
     }
   }
 }
