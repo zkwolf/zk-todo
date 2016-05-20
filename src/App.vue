@@ -1,8 +1,8 @@
 <template>
-  <sidebar :todos="todos" :filter-todos.sync="filterTodos" :todo-types="todoTypes"></sidebar>
+  <sidebar :todos="todos" :filter-todos.sync="filterTodos" :todo-types="todoTypes" :current-todo-type="currentTodoType"></sidebar>
   <div id="app">
     <div class="addTodo" @click="addTodoShow = true">+</div>
-    <todo :todos="todos" :filter-todos="filterTodos" :todo-types="todoTypes"></todo>
+    <todo :todos="todos" :filter-todos="filterTodos"></todo>
     <div id="modal" v-show="addTodoShow">
       <div id="modal-container">
         <div v-for="todoType in todoTypes">
@@ -27,6 +27,7 @@ export default {
   data () {
     return {
       todoTypes: ['Work', 'Life', 'Study'],
+      currentTodoType: 'All',
       todos: [],
       addTodoShow: '',
       picked: '',

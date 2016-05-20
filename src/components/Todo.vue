@@ -17,8 +17,7 @@ export default {
   },
   props: {
     todos: '',
-    filterTodos: '',
-    todoTypes: '',
+    filterTodos: ''
   },
   methods: {
     removeTodo: function (index) {
