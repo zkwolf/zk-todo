@@ -5,9 +5,11 @@
     <todo :todos="todos" :filter-todos="filterTodos"></todo>
     <div id="modal" v-show="addTodoShow">
       <div id="modal-container">
-        <div v-for="todoType in todoTypes">
-          <input type="radio" v-model="picked" value="{{ todoType }}" id="{{ todoType }}">
-          <label for="{{ todoType }}">{{ todoType }}</label>
+        <div id="todoTypleSelect">
+          <div v-for="todoType in todoTypes">
+            <input type="radio" v-model="picked" value="{{ todoType }}" id="{{ todoType }}">
+            <label for="{{ todoType }}">{{ todoType }}</label>
+          </div>
         </div>
         <input type="text" v-model="newTodo" @keyup.enter="addTodo" @keyup.esc="addTodoShow = false" id="addTodo">
       </div>
@@ -103,6 +105,11 @@ body {
   width: 500px;
   height: 300px;
   background-color: #fff;
+}
+
+#todoTypleSelect {
+  display: flex;
+  margin-bottom: 20px;
 }
 
 #addTodo {

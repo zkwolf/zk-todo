@@ -24,8 +24,6 @@ export default {
       }
       let filterTodos = []
       for (let todo of this.todos) {
-        console.log(todo)
-        console.log(Object.keys(todo))
         if (Object.keys(todo)[0] === this.currentTodoType) {
           filterTodos.push(todo)
         }
