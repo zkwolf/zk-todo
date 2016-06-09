@@ -1,5 +1,5 @@
 <template>
-  <sidebar :todos="todos" :filter-todos.sync="filterTodos" :todo-types="todoTypes" :current-todo-type="currentTodoType"></sidebar>
+  <sidebar :todos="todos" :filter-todos="filterTodos" :todo-types="todoTypes" :current-todo-type.sync="currentTodoType"></sidebar>
   <div id="app">
     <div class="addTodo" @click="addTodoShow = true">+</div>
     <todo :todos="todos" :filter-todos="filterTodos"></todo>
@@ -28,13 +28,27 @@ export default {
   },
   data () {
     return {
-      todoTypes: ['Work', 'Life', 'Study'],
+      todoTypes: ['All', 'Work', 'Life', 'Study'],
       currentTodoType: 'All',
-      todos: [],
+      todos: JSON.parse(localStorage.getItem('todos') || '[]'),
       addTodoShow: '',
       picked: '',
       newTodo: '',
       filterTodos: []
+    }
+  },
+  computed: {
+    filterTodos: function () {
+      if (this.currentTodoType === 'All'){
+        return this.todos
+      }
+      let filterTodos = []
+      for (let todo of this.todos) {
+        if (Object.keys(todo)[0] === this.currentTodoType) {
+          filterTodos.push(todo)
+        }
+      }
+      return filterTodos
     }
   },
   methods: {
@@ -50,12 +64,20 @@ export default {
         }
       }
     }
+  },
+  watch: {
+    todos: {
+      handler: function(todos) {
+        localStorage.setItem('todos', JSON.stringify(this.todos))
+      },
+      deep: true
+    }
   }
 }
 </script>
 
 <style>
-html, body {
+html,body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -69,6 +91,7 @@ html {
 body {
   display: flex;
 }
+
 #app {
   color: #2c3e50;
   width: 100%;

@@ -1,8 +1,5 @@
 <template>
   <sidebar>
-    <div @click="filterTodo">
-      All
-    </div>
     <div v-for="todoType in todoTypes" @click="filterTodo">
       {{ todoType }}
     <div>
@@ -16,20 +13,6 @@ export default {
     currentTodoType: '',
     filterTodos: '',
     todos: ''
-  },
-  computed: {
-    filterTodos: function () {
-      if (this.currentTodoType === 'All'){
-        return this.todos
-      }
-      let filterTodos = []
-      for (let todo of this.todos) {
-        if (Object.keys(todo)[0] === this.currentTodoType) {
-          filterTodos.push(todo)
-        }
-      }
-      return filterTodos
-    }
   },
   methods: {
     filterTodo: function (event) {
