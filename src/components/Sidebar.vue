@@ -17,6 +17,11 @@ export default {
   methods: {
     filterTodo: function (event) {
       this.currentTodoType = event.target.textContent.replace(/(^\s+)|(\s+$)/g, "")
+      let sidebar = document.querySelector('sidebar')
+      for (let todoTypeDiv of sidebar.children) {
+        todoTypeDiv.style = 'background-color: none'
+      }
+      event.target.style = 'background-color: rgba(0, 0, 0, 0.6)'
     }
   }
 }
