@@ -1,17 +1,16 @@
 <template>
-  <sidebar>
-    <div v-for="todoType in todoTypes" @click="filterTodo">
-      {{ todoType }}
-    <div>
-  </sidebar>
+<div id="sidebar">
+  <div v-for="value in todoTypes" @click="filterTodo">
+    {{ value }}
+  <div>
+</div>
 </template>
 
 <script>
 export default {
+  name: 'Sidebar',
   props: {
     todoTypes: '',
-    currentTodoType: '',
-    filterTodos: '',
     todos: ''
   },
   methods: {
@@ -28,18 +27,18 @@ export default {
 </script>
 
 <style scoped>
-sidebar {
+#sidebar {
   flex: 0 0 18rem;
   background-color: rgba(30, 144, 255, 0.9)
 }
-sidebar div {
+#sidebar div {
   font-size: 1.6rem;
   line-height: 2;
   text-align: center;
   color: #fff;
   cursor: pointer;
 }
-sidebar div:hover {
+#sidebar div:hover {
   background-color: rgba(0, 0, 0, 0.3)
 }
 </style>
