@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <sidebar :todo-types="todoTypes"></sidebar>
+    <aside>
+      <div v-for="value in todoTypes" @click="filterTodo">
+        {{ value }}
+        <div>
+    </aside>
     <main>
       <div class="addTodo" @click="addTodoShow = true">+</div>
       <!-- modal -->
@@ -10,52 +14,49 @@
             <div id="todoError">{{ errorMsg }}</div>
             <div id="todoTypeSelect">
               <div v-for="todoType in todoTypes" class="todoType">
-                <input type="radio" v-model="picked" :value="todoType" :id="todoType">
+                <input type="radio" v-model="pickedType" :value="todoType" :id="todoType">
                 <label :for="todoType">{{ todoType }}</label>
               </div>
             </div>
             <div id="todoValue">
               <input type="text" v-model="newTodo" @keyup.enter="addTodo" @keyup.esc="addTodoShow = false" id="addTodo">
             </div>
+          </div>
         </div>
       </transition>
       <!-- todoValue -->
       <div class="todo" v-for="(todoUnit, index) in todos">
         <div v-for="todoValue in todoUnit">
           {{ todoValue }}
-          <span @click="removeTodo(index)">X</span>
+          <div id="completeTodo" @click="removeTodo(index)">X</div>
         </div>
       </div>
     </main>
-  </div>
+    </div>
 </template>
 
 <script>
-import Sidebar from './components/Sidebar.vue'
-
 export default {
   name: 'Index',
-  components: {
-    Sidebar
-  },
   data () {
     return {
       todos: JSON.parse(localStorage.getItem('todos') || '[]'),
       addTodoShow: '',
       todoTypes: ['All', 'Work', 'Life', 'Study'],
       newTodo: '',
-      picked: '',
-      errorMsg: ''
+      pickedType: '',
+      errorMsg: '',
+      currentTodoType: ''
     }
   },
   methods: {
     addTodo: function () {
       let text = this.newTodo.trim()
-      let picked = this.picked
+      let pickedType = this.pickedType
       if (text) {
-        if (picked) {
+        if (pickedType) {
           let todo_item = {}
-          todo_item[picked] = text
+          todo_item[pickedType] = text
           this.todos.push(todo_item)
           this.newTodo = ''
           this.errorMsg = ''
@@ -67,6 +68,15 @@ export default {
     },
     removeTodo: function(index) {
       this.todos.splice(index, 1)
+    },
+    filterTodo: function(event) {
+      this.currentTodoType = event.target.textContent.replace(/(^\s+)|(\s+$)/g, "")
+      let sidebar = document.querySelector('aside')
+      for (let todoTypeDiv of sidebar.children) {
+        todoTypeDiv.style = 'background-color: none'
+      }
+      event.target.style = 'background-color: rgba(0, 0, 0, 0.6)'
+
     }
   },
   watch: {
@@ -76,6 +86,9 @@ export default {
       },
       deep: true
     }
+  },
+  computed: {
+
   }
 }
 </script>
@@ -90,7 +103,7 @@ export default {
   
   html {
     font-size: 10px;
-    font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
   }
   
   #app {
@@ -98,10 +111,28 @@ export default {
     height: 100%
   }
   
-  main {
+  aside {
+    flex: 0 0 18rem;
+    background-color: rgba(30, 144, 255, 0.9);
+  }
+  
+  aside div {
+    font-size: 1.6rem;
+    line-height: 2;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  aside div:hover {
+    background-color: rgba(0, 0, 0, 0.3)
+  }
+
+   main {
     color: #2c3e50;
     width: 100%;
     padding: 2rem;
+    background: #ffe0b2;
   }
   
   main a {
@@ -157,7 +188,7 @@ export default {
   .todoType {
     margin-right: 10px;
   }
-
+  
   #todoValue {
     display: flex;
     justify-content: center;
@@ -171,7 +202,7 @@ export default {
     height: 1em;
     margin-right: .2em;
     border-radius: .2em;
-    background: #bfbfbf;
+    background: #eeeeee;
     text-indent: .15em;
     line-height: .65;
     transition: background 1s;
@@ -200,9 +231,15 @@ export default {
     margin-bottom: .5rem;
   }
   
-  .todo span {
+  #completeTodo {
+    display: inline-block;
     cursor: pointer;
     margin-left: 1rem;
+    transition: transform .6s;
+  }
+
+  #completeTodo:hover {
+    transform: rotate(180deg);
   }
   
   .modal-enter {
