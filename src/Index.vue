@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <aside>
-      <div v-for="value in todoTypes" @click="filterTodo">
+      <div v-for="(value, index) in todoTypes" :class="{'active': index === selected }" @click="filterTodo(index)">
         {{ value }}
-        <div>
+      <div>
     </aside>
     <main>
       <div class="addTodo" @click="addTodoShow = true">+</div>
@@ -46,6 +46,7 @@ export default {
       newTodo: '',
       pickedType: '',
       errorMsg: '',
+      selected: 0,
       currentTodoType: ''
     }
   },
@@ -69,14 +70,9 @@ export default {
     removeTodo: function(index) {
       this.todos.splice(index, 1)
     },
-    filterTodo: function(event) {
-      this.currentTodoType = event.target.textContent.replace(/(^\s+)|(\s+$)/g, "")
-      let sidebar = document.querySelector('aside')
-      for (let todoTypeDiv of sidebar.children) {
-        todoTypeDiv.style = 'background-color: none'
-      }
-      event.target.style = 'background-color: rgba(0, 0, 0, 0.6)'
-
+    filterTodo: function(index) {
+      this.selected = index
+      this.currentTodoType = this.todoTypes[index]
     }
   },
   watch: {
@@ -126,6 +122,10 @@ export default {
   
   aside div:hover {
     background-color: rgba(0, 0, 0, 0.3)
+  }
+
+  .active {
+    background-color: rgba(0, 0, 0, 0.6)
   }
 
    main {
