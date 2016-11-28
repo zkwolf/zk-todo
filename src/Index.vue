@@ -147,7 +147,7 @@ export default {
 	
 	main a {
 		color: #42b983;
-		text-docoration: none;
+		text-decoration: none;
 	}
 	
 	#todoTypeSelect {
